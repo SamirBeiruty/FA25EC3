@@ -114,30 +114,24 @@ int main() {
 
     Tree<string> adventureTree;
 
-    // TODO: Students, create the root from rawNodes[0]
-    // adventureTree.createRoot(rawNodes[0].id, rawNodes[0].text);
+    adventureTree.createRoot(rawNodes[0].id, rawNodes[0].text);
 
-    // TODO: Students, add all remaining nodes
-    // for (int i = 1; i < rawNodes.size(); i++) {
-    //     adventureTree.addNode(...);
-    // }
-
-    // TODO: Students, implement a method in Tree<T> called playGame()
-    // This method should:
-    // 1. Start at the root node.
-    // 2. Display the current node's text.
-    // 3. Display numbered options for each child.
-    // 4. Ask the user which path to take.
-    // 5. Move to the selected child and continue until a node has no children.
-    // 6. Print an ending message.
-    //
-    // Example call after tree construction:
-    // adventureTree.playGame();
+    for (const StoryNodeRaw &node : rawNodes) {
+        for (const string &childID : node.children) {
+            string childText;
+            for (const StoryNodeRaw &n : rawNodes) {
+                if (n.id == childID) {
+                    childText = n.text;
+                    break;
+                }
+            }
+            adventureTree.addNode(node.id, childID, childText);
+        }
+    }
 
     cout << "Story loaded into your dynamic tree structure." << endl;
-    cout << "Implement the Tree class to enable traversal and printing." << endl;
 
-    // TODO: Once implemented, uncomment to allow full gameplay.
-    // adventureTree.playGame();
+    adventureTree.printAll();
+    adventureTree.playGame();
     return 0;
 }
